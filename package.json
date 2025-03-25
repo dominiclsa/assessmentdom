@@ -7,8 +7,8 @@
     "@wordpress/scripts": "30.13.0"
   },
   "engines": {
-		"node": ">=18.12.0",
-		"npm": ">=8.19.2"
+    "node": ">=18.12.0",
+    "npm": ">=8.19.2"
   },
   "scripts": {
     "assets:build": "wp-scripts build --webpack-src-dir=./content/themes/assessment/assets/src/ --output-path=./content/themes/assessment/assets/build",
@@ -21,7 +21,9 @@
     "env:logs": "wp-env logs",
     "env:restart": "wp-env stop && wp-env start",
     "env:start": "wp-env start",
-    "env:stop": "wp-env stop"
+    "env:stop": "wp-env stop",
+    "setup:content": "./scripts/setup-content.sh",
+    "setup:morecontent": "./scripts/generate-more-posts.sh"
   },
   "repository": {
     "type": "git",

@@ -1,84 +1,97 @@
-# WordPress Assessment
+# 📦 WordPress Assessment Theme
 
-This is our assessment for incoming WordPress developers aimed toward gauging experience with WordPress.
+A custom-built WordPress theme for the **WordPress Developer Assessment**, featuring a fully responsive movie catalog using a custom post type (`Movie`) and taxonomy (`Genre`). Includes REST API integration, infinite scroll, related movies, and automated content generation.
 
-Please follow the steps below and turn it in to us when you are done!
+---
 
-> NOTE: Anything marked as 'BONUS' is **NOT** required and is only there if you feel like showing off. That being said, feel free to show off. Have fun with it!
+## 🚀 Features Implemented
 
-## Setup
+### ✅ Core Functionality
 
-> WARNING: This setup assumes a Linux-based system (Linux, macOS, Windows >= 10 w/ WSL) running node version ~18 with
-> npm version ~8 and Docker. If you have trouble running anything, it probably has something to do with the above.
+- [x] 5 sample blog posts and 5 pages generated via WP-CLI
+- [x] Custom post type: `Movie`
+- [x] Custom taxonomy: `Genre` (used only for Movies)
+- [x] Homepage that dynamically loads Movie posts (initial load fills screen)
+- [x] `single-movie.php` template (with title, genre, featured image, and full content)
+- [x] Related Movies section (based on Genre)
+- [x] `single.php` for blog posts (author, image, content)
+- [x] `page.php` for static pages
+- [x] `archive-movie.php` with pagination (10 per page)
+- [x] Random featured images via [Picsum](https://picsum.photos)
 
-1. Fork this repo, clone it to your local and cd into the directory.
-1. Run `npm install`
-1. Run `npm run env:init`
-1. Run `npm run env:launch`
+### 💎 Bonus Features
 
-**Away We Go!**
+- [x] Infinite scroll (via JS + WP REST API)
+- [x] Responsive grid layout for movies
+- [x] Random thumbnail for each movie card
+- [x] Styled related movie thumbnails
+- [x] Fully automated content setup via script
 
-In a few minutes, you should have a fresh WordPress install up and running with a simple theme named WordPress Assessment activated. The service assumes it can run on port 8888, so if there's a conflict there, you'll have to edit `.wp-env.json`, run `npm run env:destroy` and then re-run `npm run env:init`.
+---
 
-Any changes made to the `./content/` folder will show up on the WordPress install.
+## 🛠 Requirements
 
-**WP-CLI**
+To run this theme locally, you'll need:
 
-If you need to run any wp-cli commands, it is available via either `npx wp-env run cli [command]` OR, you can use the `./bin/wp.sh` which should make things a bit easier.
+- Node.js ~18
+- npm ~8
+- Docker
+- WP-CLI (via `@wordpress/env`)
 
-## Assessments
+---
 
-* [Advanced Assessment](docs/advanced.md) - If you have been asked to take the advanced assessment, read the instructions here.
-* [Standard Assessment](docs/standard.md) - Our standard WordPress assessment.
+## ⚙️ Getting Started
 
-## Requirements
+### 1. Clone this repo
 
-- Ideally you'd use the @wordpress/env (Docker-based) setup so that we can all run this on our machines.
-- Any JavaScript libraries should be installed via package.json.
-- Add installation and instructions for running your code in your README.
-- I need to be able to independently run whatever you produce locally, so I can see the same result you want me to see.
+```bash
+git clone https://github.com/dominiclsa/assessmentdom
+cd wordpress-assessment
+```
 
-**Preferences**
+2. Install dependencies
+   npm install
 
-- Please don't include your whole database image (if you need to, you can include a database dump, like `dump.sql`).
-- The more automated the better (think fewer steps for the assessor to complete to get things working).
+3. Start the WordPress environment
+   npm run env:init
+   npm run env:launch
 
-## Information
+Visit your local site at:
+➡️ http://localhost:8888
 
-* [Read about @wordpress/env](https://github.com/WordPress/gutenberg/tree/trunk/packages/env).
-* [Read about @wordpress/scripts](https://github.com/WordPress/gutenberg/tree/trunk/packages/scripts).
+Admin Login:
 
-## Common Issues
+Username: admin
+Password: password 4. Set Permalinks
+Set permalink structure to /%postname%/ manually:
+http://localhost:8888/wp-admin/options-permalink.php
+⚠️ Note: I was unable to automate this step by wp-cli, it seems to be something related to docker/apache config.
 
-* **I have an error about port 8888 being in use.**
+🧪 Content Setup Script
+To auto-generate demo content (posts, pages, movies, genres), run:
 
-  You likely already have something running on port 8888. Stop any web services you may already have running, and try
-  again. If that doesn't work, and you're on Mac or Linux, try this:
-  ```shell
-  lsof -i :8888
-  ```
-  This should give you an idea of what service you need to stop/kill to be able to run this project.
+npm run setup:content
 
-  If that doesn't work, edit the ports in `.wp-env.json` and start the instructions over.
+This will:
+Create 5 blog posts
+Create 5 pages
+Create 10 movie posts
+Create 4 genre terms
+Randomly assign genres to movies
 
-* **I'm getting an error running npm install.**
+If need more content, run:
+npm run setup:morecontent
 
-  Make sure you're using the right version of `node/npm` as specified above by checking:
-  
-  ```shell
-  node --version
-  npm --version
-  ```
+🌐 Routes
 
-* **I get an error about not being able to connect to mysql.**
-
-  Most likely, your Docker app is out of date. Download the latest update for Docker, install it and start it again.
-
-  Once that's done and Docker is back up and running, you'll have to rebuild your environment:
-
-  ```shell
-  npm run env:stop
-  npm run env:destroy
-  npm run env:init
-  npm run env:launch
-  ```
+Homepage
+➡️ http://localhost:8888
+Loads movies to fill the screen and triggers infinite scroll as you scroll down.
+Movie Archive
+➡️ http://localhost:8888/movie
+Shows all movies with traditional pagination (10 per page)
+Single Movie Page
+➡️ http://localhost:8888/movie/post-1
+Displays full movie content with 3 related movies
+Static Page Example
+➡️ http://localhost:8888/sample-page/

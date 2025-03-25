@@ -62,5 +62,36 @@ function headless_scripts() {
         }
     }
 }
-
 add_action( 'wp_enqueue_scripts', 'headless_scripts' );
+
+function register_movie_post_type() {
+    register_post_type('movie', [
+        'labels' => [
+            'name' => 'Movies',
+            'singular_name' => 'Movie',
+        ],
+        'public' => true,
+        'has_archive' => true,
+        'rewrite' => ['slug' => 'movie'],
+        'show_in_rest' => true,
+        'rest_base' => 'movies',
+        'rest_controller_class' => 'WP_REST_Posts_Controller', 
+        'supports' => ['title', 'editor', 'thumbnail', 'excerpt'],
+    ]);
+}
+add_action('init', 'register_movie_post_type');
+
+
+function register_genre_taxonomy() {
+    register_taxonomy('genre', 'movie', [
+        'labels' => [
+            'name' => 'Genres',
+            'singular_name' => 'Genre',
+        ],
+        'hierarchical' => true,
+        'public' => true,
+        'show_in_rest' => true,
+    ]);
+}
+add_action('init', 'register_genre_taxonomy');
+
